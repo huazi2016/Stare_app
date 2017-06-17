@@ -1,0 +1,16 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Theme.ComputeResultActivity" parent="android:style/Theme.Dialog">
+        <!-- float_box为我们定义的窗口背景 ，这个不是必须的-->
+        <item name="android:windowBackground">@drawable/compute_result_shape</item>
+    </style>
+
+</resources>

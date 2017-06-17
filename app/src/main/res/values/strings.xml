@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">干瞪眼记分</string>
+    <string name="dialog_done">创建</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_title">创建人员提示框</string>
+    <string name="dialog_desc">请输入人员姓名和初始得分</string>
+</resources>
