@@ -54,6 +54,10 @@ public class MainActivity extends Activity {
     ImageView mIvLeftIcon;
     @BindView(R.id.iv_right_icon)
     ImageView mIvRightIcon;
+    @BindView(R.id.tv_win)
+    TextView mTvWin;
+    @BindView(R.id.tv_transport)
+    TextView mTvTransport;
 
     private MainAdapter mMainAdapter;
     private List<PersonBo> mPersonList;
@@ -73,6 +77,7 @@ public class MainActivity extends Activity {
         mPersonList = MyDataBase.getInstances(this).queryPersonInfo();
         setNoContextView();
         compareSrore();
+        setWinAndTransportScore(mPersonList);
         mMainAdapter = new MainAdapter(this, mPersonList);
         mListview.setAdapter(mMainAdapter);
     }
@@ -149,6 +154,24 @@ public class MainActivity extends Activity {
         }
     }
 
+    private void setWinAndTransportScore(List<PersonBo> personList){
+        if(personList == null || personList.size() < 0) return;
+        int winNum = 0;
+        int transportNum = 0;
+        for (int i = 0; i < personList.size(); i++) {
+            PersonBo personBo = personList.get(i);
+            int score = personBo.getScore();
+            if(score >= 0){
+                winNum += score;
+            }else {
+                transportNum += score;
+            }
+        }
+
+        mTvWin.setText("赢家： " + winNum + "分");
+        mTvTransport.setText("输家： " + transportNum + "分");
+    }
+
     private void initlistener() {
 
         mListview.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
@@ -216,7 +239,7 @@ public class MainActivity extends Activity {
                             PersonBo personBo = mPersonList.get(i);
                             if (name.equalsIgnoreCase(personBo.getName())) {
                                 isSameName = true;
-                            }else {
+                            } else {
                                 isSameName = false;
                             }
                         }
@@ -234,7 +257,7 @@ public class MainActivity extends Activity {
                         MyDataBase.getInstances(MainActivity.this).insertPersonInfo(name, 0, num);
                         mPersonList.add(personBo);
                         compareSrore();
-                        setBsetScore();
+                        //setBsetScore();
                         mListviewContainer.setVisibility(View.VISIBLE);
                         mNoContentContainer.setVisibility(View.GONE);
                         mMainAdapter.notifyDataSetChanged();
@@ -292,6 +315,7 @@ public class MainActivity extends Activity {
             mPersonList = (List<PersonBo>) data.getSerializableExtra("resultList");
             Log.d("lhx", "resultList size=" + mPersonList.size());
             compareSrore();
+            setWinAndTransportScore(mPersonList);
             mMainAdapter.setAdapterData(mPersonList);
             setBsetScore();
         }

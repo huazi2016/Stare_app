@@ -38,6 +38,44 @@
         android:layout_height="wrap_content"/>
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:background="#dddddd"
+        android:layout_height="1px"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="30dp">
+
+        <TextView
+            android:id="@+id/tv_win"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="#0c0ce7"
+            android:textSize="18sp"
+            android:text="正数: 0"
+            android:gravity="center"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:layout_width="1px"
+            android:background="#dddddd"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/tv_transport"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="负数: 0"
+            android:textColor="#df0910"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
 
     <View
         android:layout_width="match_parent"

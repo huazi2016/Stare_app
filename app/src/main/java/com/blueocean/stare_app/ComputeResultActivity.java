@@ -101,7 +101,8 @@ public class ComputeResultActivity extends Activity {
             @Override
             public void onClick(View v) {
                 List<PersonBo> adapterDate = mResultAdapter.getAdapterDate();
-                int result = 0;
+                int finalResult = 0;
+                int index = 0;
                 boolean isEdit = false;
 
                 for (int i = 0; i < adapterDate.size(); i++) {
@@ -110,20 +111,26 @@ public class ComputeResultActivity extends Activity {
                     if(!personBo.getEditScore().equalsIgnoreCase("0")){
                         isEdit = true;
                     }
-                    if (personBo.getEditScore().contains("-")) {
-                        String strNum = personBo.getEditScore().substring(1);
-                        Log.d("lhx", "strNum: " + strNum);
-                        result = personBo.getScore() - Integer.parseInt(strNum);
-                        Log.d("lhx", "负数 result: " + result);
-                    } else {
-                        result = personBo.getScore() + Integer.parseInt(personBo.getEditScore());
-                        Log.d("lhx", "正数 result: " + result);
+
+                    String strNum = personBo.getEditScore();
+                    if(strNum.equalsIgnoreCase("0")){
+                        index = i;
                     }
+                    Log.d("lhx", "strNum: " + strNum);
+                    int result = personBo.getScore() - Integer.parseInt(strNum);
+                    finalResult += result;
+                    Log.d("lhx", "result: " + result);
 
                     personBo.setScore(result);
+
                     MyDataBase.getInstances(ComputeResultActivity.this).updatePersonInfo(personBo
                             .getName(), personBo.getScore());
                 }
+
+                int sum = adapterDate.get(index).getScore() + Math.abs(finalResult);
+                adapterDate.get(index).setScore(sum);
+                MyDataBase.getInstances(ComputeResultActivity.this).updatePersonInfo(adapterDate.get(index)
+                        .getName(), adapterDate.get(index).getScore());
 
                 if(isEdit){
                     Log.d("lhx", "adapter size: " + adapterDate.size());

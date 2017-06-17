@@ -39,7 +39,7 @@
             android:layout_marginRight="8dp"
             android:padding="10dp"
             android:maxLength="6"
-            android:inputType="numberSigned"
+            android:inputType="number"
             android:hint="input..."
             android:text=""
             android:background="@drawable/edit_bg"
