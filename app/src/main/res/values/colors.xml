@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+
+    <color name="win_select">#09BB07</color>
+    <color name="win_normal">#BFBFBF</color>
+    <color name="score_red">#f50606</color>
 </resources>

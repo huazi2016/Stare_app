@@ -18,11 +18,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:launchMode="singleTask">
         </activity>
-        <activity android:name=".ComputeResultActivity"
+        <activity
+            android:name=".ComputeResultActivity"
             android:theme="@android:style/Theme.Dialog">
+        </activity>
+        <activity android:name=".HistoryActivity" android:screenOrientation="landscape">
         </activity>
     </application>
 

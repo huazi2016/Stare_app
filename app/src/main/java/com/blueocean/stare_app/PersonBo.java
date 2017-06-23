@@ -15,6 +15,15 @@ public class PersonBo implements Serializable{
     private int score;
     private String editScore = "0";
     private int headId = 0;
+    private boolean isClick = false;
+
+    public boolean isClick() {
+        return isClick;
+    }
+
+    public void setClick(boolean click) {
+        isClick = click;
+    }
 
     public String getName() {
         return name;

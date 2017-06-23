@@ -58,6 +58,8 @@ public class MainActivity extends Activity {
     TextView mTvWin;
     @BindView(R.id.tv_transport)
     TextView mTvTransport;
+    @BindView(R.id.iv_history_icon)
+    ImageView mIvHistoryIcon;
 
     private MainAdapter mMainAdapter;
     private List<PersonBo> mPersonList;
@@ -154,16 +156,17 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void setWinAndTransportScore(List<PersonBo> personList){
-        if(personList == null || personList.size() < 0) return;
+    private void setWinAndTransportScore(List<PersonBo> personList) {
+        if (personList == null || personList.size() < 0)
+            return;
         int winNum = 0;
         int transportNum = 0;
         for (int i = 0; i < personList.size(); i++) {
             PersonBo personBo = personList.get(i);
             int score = personBo.getScore();
-            if(score >= 0){
+            if (score >= 0) {
                 winNum += score;
-            }else {
+            } else {
                 transportNum += score;
             }
         }
@@ -186,6 +189,8 @@ public class MainActivity extends Activity {
                                 .getName());
                         mMainAdapter.notifyDataSetChanged();
                         setNoContextView();
+                        setWinAndTransportScore(mPersonList);
+                        setBsetScore();
                         break;
                     default:
                         break;
@@ -197,7 +202,7 @@ public class MainActivity extends Activity {
 
     }
 
-    @OnClick({R.id.iv_right_icon, R.id.iv_add, R.id.iv_left_icon})
+    @OnClick({R.id.iv_right_icon, R.id.iv_add, R.id.iv_left_icon,R.id.iv_history_icon})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_right_icon:
@@ -215,6 +220,11 @@ public class MainActivity extends Activity {
                 } else {
                     setShowDialog("温馨提示", "确认抹掉所有数据吗?", 0);
                 }
+                break;
+            case R.id.iv_history_icon:
+                intent = new Intent(this, HistoryActivity.class);
+                intent.putExtra("personList", (Serializable) mPersonList);
+                startActivity(intent);
                 break;
         }
     }
@@ -254,8 +264,8 @@ public class MainActivity extends Activity {
                         personBo.setScore(0);
                         int num = (int) (Math.random() * 11);
                         personBo.setHeadId(num);
-                        MyDataBase.getInstances(MainActivity.this).insertPersonInfo(name, 0, num);
                         mPersonList.add(personBo);
+                        MyDataBase.getInstances(MainActivity.this).insertPersonInfo(name, 0, num);
                         compareSrore();
                         //setBsetScore();
                         mListviewContainer.setVisibility(View.VISIBLE);
@@ -277,6 +287,13 @@ public class MainActivity extends Activity {
         materialDialog.setCanceledOnTouchOutside(true);
     }
 
+    /**
+     * 清空所有数据
+     *
+     * @param title
+     * @param content
+     * @param type
+     */
     private void setShowDialog(String title, String content, final int type) {
         final MaterialDialog materialDialog = new MaterialDialog(this);
         materialDialog.setTitle(title);
@@ -291,6 +308,8 @@ public class MainActivity extends Activity {
                     mListviewContainer.setVisibility(View.GONE);
                     mNoContentContainer.setVisibility(View.VISIBLE);
                     mTvBestScore.setText("激烈争夺当中...");
+                    mTvWin.setText("赢家： " + 0 + "分");
+                    mTvTransport.setText("输家： " + 0 + "分");
                 }
 
                 materialDialog.dismiss();

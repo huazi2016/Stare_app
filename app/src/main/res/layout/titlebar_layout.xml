@@ -32,6 +32,16 @@
             android:textColor="@android:color/white"/>
 
         <ImageView
+            android:id="@+id/iv_history_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:layout_toLeftOf="@+id/iv_right_icon"
+            android:visibility="visible"
+            android:layout_centerVertical="true"
+            android:src="@drawable/history_icon"/>
+
+        <ImageView
             android:id="@+id/iv_right_icon"
             android:layout_width="48dp"
             android:layout_height="48dp"

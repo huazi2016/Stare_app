@@ -40,6 +40,8 @@ public class ComputeResultActivity extends Activity {
 
     private List<PersonBo> mPersonList;
     private ComputeResultAdapter mResultAdapter;
+    boolean isEdit = false;
+    boolean isWin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,22 +105,24 @@ public class ComputeResultActivity extends Activity {
                 List<PersonBo> adapterDate = mResultAdapter.getAdapterDate();
                 int finalResult = 0;
                 int index = 0;
-                boolean isEdit = false;
 
                 for (int i = 0; i < adapterDate.size(); i++) {
                     PersonBo personBo = adapterDate.get(i);
 
-                    if(!personBo.getEditScore().equalsIgnoreCase("0")){
+                    String strNum = personBo.getEditScore();
+                    if(!strNum.equalsIgnoreCase("0")){
                         isEdit = true;
                     }
 
-                    String strNum = personBo.getEditScore();
-                    if(strNum.equalsIgnoreCase("0")){
+                    if(strNum.equalsIgnoreCase("Win")){
                         index = i;
+                        isWin = true;
+                        strNum = "0";
                     }
+
                     Log.d("lhx", "strNum: " + strNum);
                     int result = personBo.getScore() - Integer.parseInt(strNum);
-                    finalResult += result;
+                    finalResult += Integer.parseInt(strNum);
                     Log.d("lhx", "result: " + result);
 
                     personBo.setScore(result);
@@ -132,7 +136,7 @@ public class ComputeResultActivity extends Activity {
                 MyDataBase.getInstances(ComputeResultActivity.this).updatePersonInfo(adapterDate.get(index)
                         .getName(), adapterDate.get(index).getScore());
 
-                if(isEdit){
+                if(isEdit && isWin){
                     Log.d("lhx", "adapter size: " + adapterDate.size());
                     Intent intent = new Intent(ComputeResultActivity.this, MainActivity.class);
                     intent.putExtra("resultList", (Serializable) adapterDate);
@@ -140,9 +144,8 @@ public class ComputeResultActivity extends Activity {
 
                     finish();
                 }else {
-                    Toast.makeText(ComputeResultActivity.this, "所有人都无分值", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ComputeResultActivity.this, "全部为空值或未选胜利一方", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
